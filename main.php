@@ -6,13 +6,9 @@ session_start();//!DOCTYPEより上に記入
 <head>
     <meta charset="UTF-8">
     <title>本棚</title>
-    <link rel="stylesheet" href="menu.css">
-     <style>
-         img{
-             height:50px;
-         }
-     </style>
-</head>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi&family=Trispace:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="menu.css"></head>
 <body>
     <div id="navArea">
         <nav>
@@ -22,7 +18,7 @@ session_start();//!DOCTYPEより上に記入
                 <li><a href="本棚追加.php">本を追加</a></li>
                 <li><a href="本棚削除.php">本を削除</a></li>
                 <li><a href="パス変.php">パスワード変更</a></li>
-                <li><a href="ログイン.php">ログアウト</a></li>
+                <li><a href="index.html">ログアウト</a></li>
                 <li><a href="垢けし.php">アカウント削除</a></li> 
             </ul>
         </div>
@@ -35,32 +31,33 @@ session_start();//!DOCTYPEより上に記入
         <div id="mask"></div>
     </div>
     
-    
-    <h1><?php $name=$_SESSION['name'];
+    <header></header>
+    <h2><?php $name=$_SESSION['name'];
     echo $name."の本棚".'<br>';
-    ?></h1>
-    <a href="本棚追加.php">追加する</a>
-          <a href="本棚削除.php">削除する</a><br>
-    <form method="post">
-        検索:<input type="text" name="musi">
-        <input type="submit" name="ksubmit">
+    ?></h2>
+<div class="enb">
+    <a href="本棚追加.php" class="p">+</a>
+
+          <a href="本棚削除.php" class="m">-</a></div>
+<br>
+    <form method="post" class="ser">
+        <input type="text" name="musi" placeholder="ワードで絞り込む" class="inp">
+        <input type="submit" name="ksubmit" class="btns" value="検索">
     </form>
     <?php
-    //$name=$_SESSION['name'];
-    //echo $name."の本棚".'<br>';
-
+    
     //検索ボタン押されたら飛ぶ
     if(isset($_POST["ksubmit"]) && $_POST["musi"]!=null){
         $_SESSION['musi']=$_POST['musi'];
         header("Location: 検索機能.php");
-    }
+    }?>
 
-
-
+<div class="hon">
+<?php
     //DB接続設定
-	$dsn='mysql:dbname=******;host=localhost';
-	$user='******';
-	$password='9******';
+	$dsn='mysql:dbname=*****;host=localhost';
+	$user='*******';
+	$password='********';
 	$pdo=new PDO($dsn,$user,$password,array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_WARNING));
 
     $sql = "SELECT * FROM tana WHERE user_name='$name'";
@@ -87,24 +84,30 @@ session_start();//!DOCTYPEより上に記入
     //配列の何番目から取得？3x0,3x1 2pは配列[3]！
     $start_no = ($now - 1) * MAX;
 
-    $sql = "SELECT * FROM tana WHERE user_name='$name'
+    $sql = "SELECT * FROM tana WHERE user_name='$name' ORDER BY id DESC
     LIMIT $start_no,5";
     $stmt = $pdo->query($sql);
 	$results = $stmt->fetchAll();
 	foreach ($results as $row){
-	    echo $row['title'].'　';
-		echo $row['saku'].'　';
-		echo $row['memo'].'　';
-		echo "画像：".$row['picurl'].'<br>';
-	    echo '<hr>';
+	    echo '<div class="ran">';
+	    echo '<div class="data">'."『".$row['title']."』".'<br>';
+		echo "著者：".$row['saku'];
+		echo '<div class="memo">'.$row['memo'].'</div>'.'</div>'.'　';
+		echo '<div class="sya">'.$row['picurl'].'</div>';
+	    echo '</div>';
 	}
-        
+    ?>
+    </div>
+    
+    <div class="page">
+    <?php
      //最大数文のページリンク
     for($i = 1; $i <= $max_page; $i++){
-       echo'<a href="/main.php?page_id=' .$i. ' ">'.$i.'</a>';
+       echo '<div class="bnum">'.'<a href="/main.php?page_id=' .$i. ' ">'.$i.'</a>'.'</div>';
         
     }
            ?>
+    </div>
            
            <script type="text/javascript" src="jquery-3.3.1.min.js">
 
