@@ -6,24 +6,28 @@ session_start();//!DOCTYPEより上に記入
 <html lang="ja" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>ログイン画面</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi&family=Trispace:wght@600&display=swap" rel="stylesheet">
+  
   </head>
   <body>
-      <h1>ログイン画面</h1>
-      <form  method="post">
-         <div>ユーザー名<input type="text" name="user">
-         </div>
-         <div>パスワード<input type="password" 
-         readonly onfocus="this.removeAttribute('readonly');"
-         name="rpass">
-         </div>
-         <input type="submit" name="submit">
-      </form>
+      <header></header>
+            <h2>ログイン画面</h2>
+      <div class="form">
+        <form method="post">
+          <div>ユーザー名:<input type="text" name="user" class="inp"></div>
+          <div>パスワード:<input type="password" name="rpass" class="inp"></div><br>
+          <input type="submit" name="submit"  class="btn" value="ログイン">
+        </form><br>
+	        新規登録の方:
+          <a href="新規登録.php">こちら</a>
+      </div>
 <?php 
     // DB接続設定*/
-	$dsn='mysql:dbname=******tb220702db;host=localhost';
-	$user='******';
-	$password='******';
+	$dsn='mysql:dbname=*******;host=localhost';
+	$user='*******';
+	$password='*******';
 	$pdo=new PDO($dsn,$user,$password,array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_WARNING));
 
 //ボタン押されたら
@@ -52,12 +56,11 @@ if(isset($_POST["submit"]) && $_POST["user"]!=null
 	    header("Location: main.php");
 	    }
      }else{//完全一致しなかったらエラー文だす。
-         echo "ユーザー名またはpassが違います";
+     $alert = "<script type='text/javascript'>alert('ユーザー名またはpassが違います');</script>";
+    echo $alert;
      }
 }//「ボタン押されたら」了
         
 	?>
-	 <br>新規登録の方:
-      <a href="新規登録.php">新しく登録</a></p>
 </body>
 </html>

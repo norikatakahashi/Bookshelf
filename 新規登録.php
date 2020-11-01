@@ -1,20 +1,23 @@
+<!DOCTYPE html>
 <html lang="ja">
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>新規登録画面</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi&family=Trispace:wght@600&display=swap" rel="stylesheet">
   </head>
   <body>
-    <h1>新規登録</h1>
-    <form method="post">
-      <div>ユーザ名: <input type="text" name="username"></div>
-      
-      <div>パスワード: <input type="password" 
-         readonly onfocus="this.removeAttribute('readonly');" name="pass"></div>
-      
-      <div><input type="submit" value="登録" name="submit" /></div>
-    </form>
-    <p>アカウントをお持ちの方は
-    <a href="ログイン.php">こちら</a>へ</p>
+    <header></header>
+    <h2>新規登録</h2>
+    <div class="form">
+        <form method="post">
+            <div>ユーザ名: <input type="text" name="username" class="inp"></div>
+            <div>パスワード: <input type="password" name="pass" class="inp"></div>
+            <br>
+            <input type="submit" value="登録する"name="submit" class="btn"/>
+    </form><br>
+    アカウントをお持ちの方:<a href="ログイン.php">こちら</a>
+    
     <?php 
     // DB接続設定*/
 	$dsn='mysql:dbname=******;host=localhost';
@@ -53,13 +56,15 @@
     $comment=$_POST["pass"];
     $sql -> execute();
     
-    echo "登録完了".'<br>';
-    echo '<a href="ログイン.php">ログイン画面へ</a>';
+    $alert = "<script type='text/javascript'>alert
+    ('登録成功！');</script>";
+    echo $alert;
     }//いる場合
     else{
-        echo "既にいます。".'<br>'."別の名前に変えて下さい。";
+        $alert = "<script type='text/javascript'>alert('同じ名前のユーザーが既にいます。別の名前に変えて下さい。');</script>";
+        echo $alert;
     }
     }
-    ?>
+    ?></div>
 </body>
 </html>

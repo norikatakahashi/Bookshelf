@@ -6,13 +6,9 @@ session_start();//!DOCTYPEより上に記入
 <head>
     <meta charset="UTF-8">
     <title>本棚追加</title>
+<link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi&family=Trispace:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="menu.css">
-     <style>
-         img{
-             height:50px;
-         }
-         
-     </style>
 </head>
 <body>
     <div id="navArea">
@@ -23,7 +19,7 @@ session_start();//!DOCTYPEより上に記入
                 <li><a href="本棚追加.php">本を追加</a></li>
                 <li><a href="本棚削除.php">本を削除</a></li>
                 <li><a href="パス変.php">パスワード変更</a></li>
-                <li><a href="ログイン.php">ログアウト</a></li>
+                <li><a href="index.html">ログアウト</a></li>
                 <li><a href="垢けし.php">アカウント削除</a></li> 
             </ul>
         </div>
@@ -35,26 +31,27 @@ session_start();//!DOCTYPEより上に記入
         </div>
         <div id="mask"></div>
     </div>
-    <h1>本棚に本を追加する</h1>
+<header></header>
+    <h2>本を追加する</h2>
+<div class="form">
     <form  method="post" enctype="multipart/form-data">
     【投稿フォーム】<br>
-        タイトル:<input type="text" name="tit"><br>
-        作者:<input type="text" name="com"><br><br>
-        メモ：<textarea name="memo"></textarea><br>
-        画像：<input type="file" name="upimg" accept="image/*"><br>
-        <input type="submit" name="submit">
+        タイトル<br><input type="text" name="tit" class="inp"><br>
+        作者<br><input type="text" name="com" class="inp"><br>
+        メモ<br><textarea name="memo" class="inp"></textarea><br>
+        画像：<input type="file" name="upimg" accept="image/*" ><br><br>
+        <input type="submit" name="submit" class="btn">
     </form>
-    ---------------------------------------<br>
-    
+</div>
+    <br>
     <?php
     $name=$_SESSION['name'];
-    echo $name."の本棚".'<br>';
     
     ini_set("display_errors", "Off");
     
     //DB接続設定
-	$dsn='mysql:dbname=******db;host=localhost';
-	$user='tb-******';
+	$dsn='mysql:dbname=******;host=localhost';
+	$user='******';
 	$password='******';
 	$pdo=new PDO($dsn,$user,$password,array(PDO::ATTR_ERRMODE=>PDO::ERRMODE_WARNING));
 
@@ -98,12 +95,27 @@ session_start();//!DOCTYPEより上に記入
     $picurl='<img src="data:' . $imginfo['mime'] . ';base64,'.$enc_img.'">';
     $sql -> execute();
     
+    //テーブル内にあるか確認
+    $sql = "SELECT * FROM tana WHERE user_name='$name'
+        AND saku='$saku'
+        AND title='$title'
+        AND memo='$memo'";
+        
+        $stmt = $pdo->query($sql);
+	    //データの行数知りたい
+	    $count=$stmt->rowCount();
 
-	    echo $title.'　'.$saku.'　'.$memo.'　'.$picurl.'<br>'.
+     if($count!=0){
+         //もし一致したら
+	    echo '<div class="ran">'.'<div class="data">'."『".$title."』".'<br>'."著者：".$saku.'<br>'.'<div class="memo">'.$memo.'</div>'.'</div>'.'<div class="sya">'.$picurl.'</div>'.'</div>'.'<br>'.
 	    "以上を追加しました！".'<br>';
 	    
+    }else{
+        echo "画像サイズが大きく、登録できません";
     }
+    }//全体のif文
     ?>
+<footer></footer>
            <script type="text/javascript" src="jquery-3.3.1.min.js">
 
 </script>

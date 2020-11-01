@@ -7,6 +7,8 @@ session_start();//!DOCTYPEより上に記入
   <head>
     <meta charset="utf-8">
     <title>パスワード変更</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi&family=Trispace:wght@600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="menu.css">
   </head>
   <body>
@@ -31,18 +33,20 @@ session_start();//!DOCTYPEより上に記入
         </div>
         <div id="mask"></div>
     </div>
-      <h1>パスワードの変更</h1>
+      <header></header>
+      <h2>パスワードの変更</h2>
+<div class="form">
       <form method="post">
-      現在のPASS<input type="text" name="gpass"/>
+      現在のPASS<input type="text" class="inp" name="gpass" />
 
       <br><br>
         
-      新しいPASS<input type="password" name="hpass" 
-      readonly onfocus="this.removeAttribute('readonly');"/><br>
-      もう一回<input type="password" name="hhpass" 
-      readonly onfocus="this.removeAttribute('readonly');"/>
-    <input type="submit" value="変更"name="hsub"/>
+      新しいPASS<input type="password" class="inp" name="hpass" 
+      /><br>
+      もう一度入力<input type="password" class="inp" name="hhpass" /><br><br>
+    <input type="submit" class="btn" value="変更"name="hsub"/>
       </form>
+</div>
       <br>
       <?php
       $name=$_SESSION['name'];

@@ -6,12 +6,10 @@ session_start();//!DOCTYPEより上に記入
 <head>
     <meta charset="UTF-8">
     <title>検索</title>
+    <link rel="stylesheet" href="index.css">
+    <link href="https://fonts.googleapis.com/css2?family=Kosugi&family=Trispace:wght@600&display=swap"
+    rel="stylesheet">
     <link rel="stylesheet" href="menu.css">
-    <style>
-         img{
-             height:50px;
-         }
-     </style>
 </head>
 <body>
     <div id="navArea">
@@ -22,7 +20,7 @@ session_start();//!DOCTYPEより上に記入
                 <li><a href="本棚追加.php">本を追加</a></li>
                 <li><a href="本棚削除.php">本を削除</a></li>
                 <li><a href="パス変.php">パスワード変更</a></li>
-                <li><a href="ログイン.php">ログアウト</a></li>
+                <li><a href="index.html">ログアウト</a></li>
                 <li><a href="垢けし.php">アカウント削除</a></li> 
             </ul>
         </div>
@@ -34,11 +32,16 @@ session_start();//!DOCTYPEより上に記入
         </div>
         <div id="mask"></div>
     </div>
-    
-    <h1>本棚から検索する</h1>
-    <form  method="post">
-        検索:<input type="text" name="musi">
-        <input type="submit" name="ksubmit">
+    <header></header>
+    <h2>本棚から検索する</h2>
+
+<div class="kensaku">
+
+    <form  method="post" class="ser">
+        <input type="text" name="musi"
+        placeholder="ワードで絞り込む" class="inp">
+        <input type="submit" name="ksubmit"
+        class="btns" value="検索">
     </form>
     
     ---------------------------------------<br>
@@ -46,7 +49,6 @@ session_start();//!DOCTYPEより上に記入
     <?php
     $name=$_SESSION['name'];
     $musi=$_SESSION['musi'];
-    echo $name;
     //DB接続設定
 	$dsn='mysql:dbname=******;host=localhost';
 	$user='******';
@@ -57,8 +59,8 @@ session_start();//!DOCTYPEより上に記入
     if(isset($_POST["ksubmit"]) && $_POST["musi"]!=null){
         $_SESSION['musi']=$_POST['musi'];
         header("Location: 検索機能.php");
-    }
-
+    }?>
+    <?php
         //部分一致してるか
         $sql = "SELECT * FROM tana WHERE user_name='$name'
         AND (memo LIKE '%$musi%'
@@ -100,22 +102,31 @@ session_start();//!DOCTYPEより上に記入
         $results = $stmt->fetchAll();
         
         foreach ($results as $row){
-        echo $row['title'].'　';
-		echo $row['saku'].'　';
-		echo $row['memo'].'　';
-		echo "画像：".$row['picurl'].'<br>';
-	    echo '<hr>';
+	    echo '<div class="ran">';
+	    echo '<div class="data">'."『".$row['title']."』".'<br>';
+		echo "著者：".$row['saku'];
+		echo '<div class="memo">'.$row['memo'].'</div>'.'</div>'.'　';
+		echo '<div class="sya">'.$row['picurl'].'</div>';
+	    echo '</div>';
+	}
             
         }//foreach了
+        ?>
+        <div class="page">
+        <?php
+        if($count!=0){
          //最大数文のページリンク
     for($i = 1; $i <= $max_page; $i++){
-       echo'<a href="/検索機能.php?page_id=' .$i. ' ">'.$i.'</a>';
-        }
+       echo '<div class="bnum">'.
+       '<a href="/main.php?page_id=' .$i. ' ">'
+       .$i.'</a>'.'</div>';}
         }
     //}if文了
     
            ?>
-                      <script type="text/javascript" src="jquery-3.3.1.min.js">
+         </div>
+</div>
+<script type="text/javascript" src="jquery-3.3.1.min.js">
 
 </script>
 
